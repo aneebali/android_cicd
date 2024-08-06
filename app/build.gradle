@@ -23,18 +23,11 @@ android {
     def key_alias = project.hasProperty('KEY_ALIAS') ? KEY_ALIAS : System.getenv("KEY_ALIAS")
     def key_password = project.hasProperty('KEY_PASSWORD') ? KEY_PASSWORD : System.getenv("KEY_PASSWORD")
 
-    def storeFilePath = project.hasProperty('storeFile')
-    def storePasswordValue = project.hasProperty('storePass') && !project.property('storePass').isEmpty() ? project.property('storePass') : null
-    def keyAliasValue = project.hasProperty('keyAlias') && !project.property('keyAlias').isEmpty() ? project.property('keyAlias') : null
-    def keyPasswordValue = project.hasProperty('keyPass') && !project.property('keyPass').isEmpty() ? project.property('keyPass') : null
-
     signingConfigs {
         release {
-
-            storeFile file("storeFile")
-            storePassword = storePasswordValue
-            keyAlias = keyAliasValue
-            keyPassword = keyPasswordValue
+            storeFile file(project["storeFile"])
+            storePassword project["storePass"]
+            keyPassword project["keyPass"]
         }
     }
     /*signingConfigs {
