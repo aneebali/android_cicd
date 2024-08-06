@@ -23,12 +23,17 @@ android {
     def key_alias = project.hasProperty('KEY_ALIAS') ? KEY_ALIAS : System.getenv("KEY_ALIAS")
     def key_password = project.hasProperty('KEY_PASSWORD') ? KEY_PASSWORD : System.getenv("KEY_PASSWORD")
 
-    signingConfigs {
-        release {
-            storeFile file(project["storeFile"])
-            storePassword project["storePass"]
-            keyAlias project["keyAlias"]
-            keyPassword project["keyPass"]
+    def isJenkinsBuild = project.hasProperty('storeFile') && project.hasProperty('storePass') &&
+            project.hasProperty('keyAlias') && project.hasProperty('keyPass')
+
+    if (isJenkinsBuild) {
+        signingConfigs {
+            release {
+                storeFile file(project["storeFile"])
+                storePassword project["storePass"]
+                keyAlias project["keyAlias"]
+                keyPassword project["keyPass"]
+            }
         }
     }
     /*signingConfigs {
@@ -56,7 +61,9 @@ android {
 
         release {
             minifyEnabled false
-            signingConfig signingConfigs.release
+            if (isJenkinsBuild) {
+                signingConfig signingConfigs.release
+            }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             /*if (keystore_password && key_alias && key_password) {
