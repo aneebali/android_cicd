@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.firebase.firebase-perf'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -23,12 +25,16 @@ android {
 
     signingConfigs {
         release {
+        }
+    }
+    /*signingConfigs {
+        release {
             storeFile file('../test.jks')
             storePassword keystore_password
             keyAlias key_alias
             keyPassword key_password
         }
-    }
+    }*/
 
     compileSdk 33
 
@@ -68,6 +74,15 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation 'com.google.firebase:firebase-analytics'
+    // Add the dependency for the Performance Monitoring library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-perf")
+
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
