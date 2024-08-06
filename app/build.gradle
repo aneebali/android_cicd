@@ -49,14 +49,18 @@ android {
     }
 
     buildTypes {
+
         release {
-            if (keystore_password && key_alias && key_password) {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            /*if (keystore_password && key_alias && key_password) {
                 minifyEnabled false
-                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
                 signingConfig signingConfigs.release
             } else {
                 logger.error("You need to define KEYSTORE_PASSWORD, KEY_ALIAS and KEY_PASSWORD to enable release signing.")
-            }
+            }*/
         }
     }
     compileOptions {
