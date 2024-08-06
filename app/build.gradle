@@ -52,7 +52,7 @@ android {
 
         release {
             minifyEnabled false
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             /*if (keystore_password && key_alias && key_password) {
